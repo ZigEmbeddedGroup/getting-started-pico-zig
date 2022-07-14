@@ -6,6 +6,7 @@ const time = rp2040.time;
 const gpio = rp2040.gpio;
 const clocks = rp2040.clocks;
 
+const led = 25;
 const uart_id = 0;
 const baud_rate = 115200;
 const uart_tx_pin = 0;
@@ -18,7 +19,6 @@ pub fn panic(message: []const u8, maybe_stack_trace: ?*std.builtin.StackTrace) n
     while (true) {}
 }
 
-const led = 25;
 pub fn main() !void {
     gpio.init(led);
     gpio.setDir(led, .out);
@@ -33,8 +33,7 @@ pub fn main() !void {
 
     while (true) {
         gpio.put(led, 1);
-        const khz = clocks.countFrequencyKhz(.clk_sys, rp2040.clock_config);
-        try uart.print("hello worlb\r\n", .{khz});
+        try uart.writeAll("hello world\r\n");
         time.sleepMs(500);
 
         gpio.put(led, 0);

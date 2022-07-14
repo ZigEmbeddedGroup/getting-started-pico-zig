@@ -24,9 +24,9 @@ pub fn init() void {
     gpio.reset();
 }
 
-const pin = 21;
+const gpout0_pin = 21;
 
 pub fn main() !void {
-    gpio.setFunction(pin, .gpck);
+    gpio.setFunction(gpout0_pin, .gpck);
     while (true) {}
 }

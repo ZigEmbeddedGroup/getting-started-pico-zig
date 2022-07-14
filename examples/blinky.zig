@@ -17,7 +17,6 @@ pub fn panic(message: []const u8, maybe_stack_trace: ?*std.builtin.StackTrace) n
 const led = 25;
 
 pub fn main() !void {
-    gpio.reset();
     gpio.init(led);
     gpio.setDir(led, .out);
     while (true) {

@@ -35,6 +35,8 @@ pub fn addExample(b: *Builder, comptime name: []const u8) !void {
 pub fn build(b: *Builder) !void {
     try addExample(b, "blinky");
     try addExample(b, "blinky_core1");
+    try addExample(b, "uart");
+    try addExample(b, "gpio_clk");
 }
 
 // TODO: wip

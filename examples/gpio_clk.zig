@@ -14,24 +14,19 @@ pub fn panic(message: []const u8, maybe_stack_trace: ?*std.builtin.StackTrace) n
     while (true) {}
 }
 
-const led = 25;
+const clock_config = clocks.GlobalConfiguration.init(.{
+    .sys = .{ .source = .src_xosc },
+    .gpout0 = .{ .source = .clk_sys },
+});
 
-fn core1() void {
-    while (true) {
-        gpio.put(led, 1);
-        time.sleepMs(250);
-        gpio.put(led, 0);
-        time.sleepMs(250);
-    }
+pub fn init() void {
+    clock_config.apply();
+    gpio.reset();
 }
 
+const pin = 21;
+
 pub fn main() !void {
-    gpio.init(led);
-    gpio.setDir(led, .out);
-
-    multicore.launchCore1(core1);
-
-    while (true) {
-        microzig.cpu.wfi();
-    }
+    gpio.setFunction(pin, .gpck);
+    while (true) {}
 }
